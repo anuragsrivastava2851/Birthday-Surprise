@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  background:linear-gradient(135deg,#ffe6f2,#ffd6eb,#ffcce6);
+  overflow-x:hidden;
+  color:#c2185b;
+}
+
+section{padding:100px 20px;text-align:center}
+
+h1{
+  font-size:60px;
+  background:linear-gradient(to right,#ff4da6,#ff80bf);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+h2{font-size:40px;margin-bottom:60px}
+
+button{
+  background:linear-gradient(to right,#ff66b2,#ff3385);
+  border:none;
+  padding:15px 40px;
+  border-radius:50px;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(255,0,128,0.3);
+  transition:0.3s;
+}
+button:hover{transform:scale(1.1)}
+
+/* Floating Hearts */
+.heart{
+  position:fixed;
+  bottom:-50px;
+  color:#ff99cc;
+  animation:float linear infinite;
+}
+@keyframes float{
+  to{transform:translateY(-110vh);opacity:0}
+}
+
+/* 3D Memory Slider */
+.slider{
+  position:relative;
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  height:500px;
+  transform-style:preserve-3d;
+  transition:1s;
+}
+.slide{
+  position:absolute;
+  width:300px;
+  height:420px;
+  left:50%;
+  top:50%;
+  transform-style:preserve-3d;
+}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+.caption{
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  color:white;
+  font-weight:600;
+}
+
+/* Countdown */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+.box{
+  background:white;
+  padding:40px;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(255,0,128,0.2);
+  width:150px;
+  transition:0.4s;
+}
+.box:hover{transform:translateY(-15px) scale(1.1)}
+.box h3{font-size:35px;color:#ff3385}
+
+/* Letter */
+.letter{
+  max-width:800px;
+  margin:auto;
+  background:white;
+  padding:60px;
+  border-radius:30px;
+  box-shadow:0 20px 50px rgba(255,0,128,0.2);
+  line-height:1.8;
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+}
+.modal-content{
+  background:white;
+  padding:60px;
+  border-radius:30px;
+  text-align:center;
+}
+.show{visibility:visible}
+
+/* Surprise Full Screen */
+.surprise{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ff80bf,#ff3385);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:white;
+  font-size:50px;
+  visibility:hidden;
+  opacity:0;
+  transition:1.5s ease;
+  z-index:999;
+}
+.surprise.show{
+  visibility:visible;
+  opacity:1;
+}
+
+footer{padding:40px 20px;font-weight:600}
+</style>
+</head>
+
+<body>
+
+<section>
+<h1>Happy Birthday My Love 💖</h1>
+<br><br>
+<p style="font-size:20px">Today is all about celebrating the most special person in my life ✨</p>
+<br><br>
+<button onclick="openModal()">Open Your Surprise 🎁</button>
+</section>
+
+<section>
+<h2>Our Beautiful Memories ✨</h2>
+<div class="slider" id="slider"></div>
+</section>
+
+<section>
+<h2>Countdown To 3 March 2026 – 11:33 PM 🎂</h2>
+<div class="countdown" id="countdown"></div>
+</section>
+
+<section>
+<h2>A Letter For You 💌</h2>
+<div class="letter">
+My Love,<br><br>
+Mumma, I miss you so much. Every single day feels incomplete without you. No matter how busy life gets, there’s always this empty space in my heart that only you can fill.<br><br>
+
+Mumma, I don’t ever want to lose you. The thought of being without you scares me, because you are my strength, my comfort, and my safest place. Your love is what keeps me going.<br><br>
+
+I just want to hug you tight and tell you how much I love you, Mumma. I miss you more than words can explain, and I always will. 💛
+</div>
+</section>
+
+<footer>Made With ❤️ By Your Forever Love</footer>
+
+<!-- Surprise Page -->
+<div class="surprise" id="surprisePage">
+🎉 HAPPY BIRTHDAY MY LOVE 🎂
+<div style="font-size:20px;margin-top:20px" id="finalTime"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<h2>I Love You Forever 💖</h2>
+<br>
+<button onclick="closeModal()">Close</button>
+</div>
+</div>
+
+<!-- Music -->
+<audio id="birthdayMusic" src="happybirthday.mp3"></audio>
+
+<script>
+
+/* Floating Hearts */
+for(let i=0;i<30;i++){
+  let heart=document.createElement('div');
+  heart.innerHTML='❤';
+  heart.className='heart';
+  heart.style.left=Math.random()*100+'%';
+  heart.style.fontSize=(15+Math.random()*25)+'px';
+  heart.style.animationDuration=(5+Math.random()*10)+'s';
+  document.body.appendChild(heart);
+}
+
+/* 3D Slider */
+const slider=document.getElementById('slider');
+const images=["img1.jpeg","img2.jpeg","img3.jpeg","img4.jpeg","img5.jpeg"];
+let angle=0;
+
+images.forEach((item,i)=>{
+  let div=document.createElement('div');
+  div.className='slide';
+  div.style.transform=`rotateY(${i*(360/images.length)}deg) translate(-50%,-50%) translateZ(400px)`;
+  div.innerHTML=`<img src="${item}"><div class='caption'>Beautiful Memory 💕</div>`;
+  slider.appendChild(div);
+});
+
+setInterval(()=>{
+  angle+=72;
+  slider.style.transform=`rotateY(${angle}deg)`;
+},3000);
+
+/* Countdown IST Safe (3 March 2026 – 11:33 PM IST) */
+const target = new Date("March 3, 2026 23:50:00").getTime();
+
+const countdown=document.getElementById('countdown');
+const surprise=document.getElementById('surprisePage');
+const music=document.getElementById('birthdayMusic');
+
+let timer=setInterval(()=>{
+  const now=new Date().getTime();
+  const diff=target-now;
+
+  if(diff<=0){
+    clearInterval(timer);
+
+    countdown.innerHTML="<h2>🎉 It's 3 March 2026 – 11:33 PM 🎉</h2>";
+    surprise.classList.add("show");
+
+    document.getElementById("finalTime").innerHTML=
+      "Time Now: "+new Date().toLocaleString();
+
+    music.volume=0;
+    music.play();
+
+    let vol=0;
+    let fade=setInterval(()=>{
+      if(vol<1){
+        vol+=0.05;
+        music.volume=vol;
+      }else{
+        clearInterval(fade);
+      }
+    },300);
+
+    return;
+  }
+
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff/(1000*60*60))%24);
+  const minutes=Math.floor((diff/1000/60)%60);
+  const seconds=Math.floor((diff/1000)%60);
+
+  countdown.innerHTML=`
+  <div class='box'><h3>${days}</h3><p>Days</p></div>
+  <div class='box'><h3>${hours}</h3><p>Hours</p></div>
+  <div class='box'><h3>${minutes}</h3><p>Minutes</p></div>
+  <div class='box'><h3>${seconds}</h3><p>Seconds</p></div>
+  `;
+},1000);
+
+function openModal(){
+  document.getElementById('modal').classList.add('show')
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show')
+}
+
+</script>
+
+</body>
+</html>
